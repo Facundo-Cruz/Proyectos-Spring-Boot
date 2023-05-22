@@ -1,0 +1,15 @@
+body{
+    background: #eee;
+}
+.bg-mountain {
+    background-image: url(../img/casa.webp);
+    background-size: cover;
+    background-position: right;
+}
+
+@media (min-width: 768px) {
+    .gradient-form {
+        height: 100vh !important;
+    }
+}
+

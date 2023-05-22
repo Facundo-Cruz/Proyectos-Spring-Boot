@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head th:replace="/fragments/head :: head"</head>
+
+    <body>
+        <nav th:replace="fragments/navbar :: nav"></nav>
+        <div class="container">
+            <div th:if="${exito}!=null" class="card text-white bg-success mb-3 mt-3 mensajeExito" >
+                <div class="card-body">
+                    <h5 class="card-title">Exito</h5>
+                    <p class="card-text" th:text="${exito}"></p>
+                </div>
+            </div>
+
+            <h1 class="title-center my-2 display-5 text-dark">infomendo</h1>
+
+            <div class="contenedor-flexible">
+                <div th:each="noticia : ${noticias}" class="card my-4 contenido" style="color: black">
+                    <h5 class="card-header" th:text="${noticia.fecha}"></h5>
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${noticia.titulo}" style="font-weight: bold"></h5>
+                        <p class="card-text text-overflow" th:utext="${noticia.cuerpo}" ></p>
+                        <!--<p class="card-text text-overflow" th:utext="${#strings.substring(noticia.cuerpo, 0, 100) + '...'}"></p>-->
+
+
+                        <a th:href= "@{/noticia/mostrar/__${noticia.id}__/__${noticias.number}__}" class="btn btn-primary">Ir a la noticia</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="nav-center">
+
+            <nav th:if="${noticias.totalPages > 1}" class="display-inline">
+                <ul class="pagination">
+                    <li class="page-item" th:classappend="${noticias.first ? 'disabled' : ''}">
+                        <a class="page-link" th:href="@{${'/inicio/?page=' + (noticias.number - 1)} }">Anterior</a>
+                    </li>
+                    <li class="page-item" th:classappend="${i == noticias.number ? 'active' : ''}" th:each="i : ${#numbers.sequence(0, noticias.totalPages - 1)}">
+                        <a class="page-link" th:href="@{${'/inicio/?page=' + i}}"><span th:text="${i + 1}"></span></a>
+                    </li>
+                    <li class="page-item" th:classappend="${noticias.last ? 'disabled' : ''}">
+                        <a class="page-link" th:href="@{${'/inicio/?page=' + (noticias.number + 1)} }">Siguiente</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+
+
+
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+    </body>
+
+</html>

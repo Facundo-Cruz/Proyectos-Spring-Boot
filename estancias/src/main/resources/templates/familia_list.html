@@ -1,0 +1,116 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head th:replace="fragments/head :: head"></head>
+
+    <body>
+
+        <nav th:replace="fragments/navbar :: nav"></nav>
+
+        <div class="container m-5">
+            <div th:if="${exito}!=null" class="card text-white bg-success mb-3 mt-3 mensajeExito" >
+                <div class="card-body">
+                    <h5 class="card-title">Exito</h5>
+                    <p class="card-text" th:text="${exito}"></p>
+                </div>
+            </div>
+            <div th:if="${error != null}" class="card text-white bg-danger mb-3" style="max-width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Error</h5>
+                    <p class="card-text" th:text="${error}"></p>
+                </div>
+            </div>
+            <table class="table table-dark">
+                <thead class="align-items-center">
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Alias</th>
+                        <th scope="col">Fecha de Alta</th>
+                        <th scope="col">Fecha de Baja</th>
+                        <th scope="col">N° de hijos</th>
+                        <th scope="col">Edad max hijos</th>
+                        <th scope="col">Edad min hijos</th>
+                        <th colspan="2" scope="col" style="text-align:center;">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody th:each="familia : ${familias}">
+                    <tr>
+                        <th scope="row" th:text="${familia.id}"></th>
+                        <td th:text="${familia.alias}"></td>
+
+
+                        <td th:text="${familia.fechaAlta}"></td>
+                        <td th:text="${familia.fechaBaja != null} ? ${familia.fechaBaja} : 'Familia Activa'"></td>
+                        <td th:text="${familia.numHijos}"></td>
+                        <td th:text="${familia.edadMax}"></td>
+                        <td th:text="${familia.edadMin}"></td>
+                        <td>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" th:data-target="'#myModalAlta'+${familia.id}"
+                                    th:if="${familia.estado != true}"><i class="fa-solid fa-user-pen"></i> Dar Alta</button>
+                            <button type="button" class="btn btn-secondary" data-toggle="modal" th:data-target="'#myModalBaja'+${familia.id}"
+                                    th:if="${familia.estado == true}"><i class="fa-solid fa-user-pen"></i> Dar Baja</button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" th:data-target="'#myModalDelete'+${familia.id}"><i class="fas fa-trash"></i> Eliminar</button>
+                        </td>
+                    </tr>
+                    <!--MODAL ELIMINAR-->
+                <div class="modal fade" th:id="'myModalDelete'+${familia.id}">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" style="color: black">¿Estás seguro de eliminar a la familia "[[${familia.alias}]]" ?</h4>
+                            </div>
+
+                            <div class="modal-footer">
+                                <a class="btn btn-danger" th:href= "@{/familia/eliminar/__${familia.id}__}">Eliminar </a>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--MODAL BAJA-->
+                <div class="modal fade" th:id="'myModalBaja'+${familia.id}" th:if="${familia.estado == true}">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" style="color: black">¿Estás seguro de dar de baja a "[[${familia.alias}]]" ?</h4>
+                            </div>
+
+                            <div class="modal-footer">
+                                <a class="btn btn-danger" th:href= "@{/familia/darBaja/__${familia.id}__/__${familia.estado}__}">Dar Baja </a>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--MODAL ALTA-->
+                <div class="modal fade" th:id="'myModalAlta'+${familia.id}" th:if="${familia.estado != true}">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" style="color: black">¿Estás seguro de dar de alta a "[[${familia.alias}]]" ?</h4>
+                            </div>
+
+                            <div class="modal-footer">
+                                <a class="btn btn-secondary" th:href= "@{/familia/darBaja/__${familia.id}__/__${familia.estado}__}">Dar Alta </a>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </tbody>
+            </table>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </body>
+
+</html>

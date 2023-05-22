@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head th:replace="/fragments/head :: head"></head>
+
+    <body>
+        <nav th:replace="fragments/navbar :: nav"></nav>
+
+        <div class="container text-white" >
+            <div th:if="${error}!=null" class="card text-white bg-danger mb-3 mensajeError my-3" >
+                <div class="card-body">
+                    <h5 class="card-title">Error</h5>
+                    <p class="card-text" th:text="${error}"></p>
+                </div>
+            </div>
+            <h3 class="my-3 title"><i class="fa-solid fa-pen"></i> Crear Noticia </h3>
+            <form action="/noticia/registro" method="POST">
+                <input hidden th:value= "${session.usuariosession.id}" name="id">
+                <div class="mb-3">
+                    <label for="titulo" class="form-label">Título</label>
+                    <input type="text" class="form-control bg-color" id="titulo" placeholder="Ingrese el título" name="titulo">
+                </div>
+                <div class="mb-3">
+                    <label for="cuerpo" class="form-label">Cuerpo</label>
+                    <textarea class="form-control bg-color" id="editor" rows="9"
+                              placeholder="Ingrese el contenido" name="cuerpo"></textarea>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-primary mt-3 botones">Guardar</button>
+                </div>
+            </form>
+            <div class="divVolver">
+                <a class="btn btn-secondary my-4 botonVolver botones" th:href="@{/noticia/lista}">Volver</a>
+            </div>
+        </div>
+
+
+
+
+
+        <!-- JavaScript Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+
+        <!-- JavaScript  -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.6.0/umd/popper.min.js" integrity="sha512-BmM0/BQlqh02wuK5Gz9yrbe7VyIVwOzD1o40yi1IsTjriX/NGF37NyXHfmFzIlMmoSIBXgqDiG1VNU6kB5dBbA==" crossorigin="anonymous"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+        <!-- editor texto -->
+        <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+        <script>
+            tinymce.init({
+            selector: 'textarea#editor',
+            skin: 'bootstrap', //The TinyMCE Bootstrap skin
+            plugins: 'lists, link, image, media',
+            toolbar: 'h1 h2 bold italic strikethrough blockquote bullist numlist backcolor | link image media | removeformat help',
+            menubar: false,
+            setup: (editor) => {
+            // Apply the focus effect
+            editor.on("init", () => {
+            editor.getContainer().style.transition = "border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out";
+            });
+            editor.on("focus", () => { (editor.getContainer().style.boxShadow = "0 0 0 .2rem rgba(0, 123, 255, .25)"),
+            (editor.getContainer().style.borderColor = "#80bdff");
+            });
+            editor.on("blur", () => {
+            (editor.getContainer().style.boxShadow = ""),
+            (editor.getContainer().style.borderColor = "");
+            });
+            },
+            });
+        </script>
+    </body>
+
+</html>

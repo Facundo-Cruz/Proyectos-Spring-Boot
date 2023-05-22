@@ -1,0 +1,91 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <title>Estancia</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <!--Css Personalizado-->
+    <link rel="stylesheet" href="/css/form.css" />
+    <link rel="stylesheet" href="/css/navbar.css" />
+</head>
+
+<body>
+    <nav th:replace="fragments/navbar :: nav"></nav>
+    <!-- <div class="container-fluid contenedor"> -->
+        <div th:if="${exito}!=null" class="card text-white bg-success mb-3 mt-3 mensaje">
+            <div class="card-body">
+                <h5 class="card-title">Exito</h5>
+                <p class="card-text" th:text="${exito}"></p>
+            </div>
+        </div>
+        <div th:if="${error != null}" class="card text-white bg-danger mb-3 mensaje" style="max-width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Error</h5>
+                <p class="card-text" th:text="${error}"></p>
+            </div>
+        </div>
+        <div class="card my-4 contenido" style="width: 30%; margin: 0 auto;">
+            <img class="card-img-top"
+                th:if="${casa.imagen != null}" th:src="@{/imagen/__${casa.id}__}"
+                alt="Imagen de la casa">
+            <div class="card-body">
+                <h5 class="card-title"
+                    th:text="${casa.calle} + ' ' + ${casa.numero} + ', ' + ${casa.ciudad} + ', ' + ${casa.pais}">
+                </h5>
+                <p class="card-text" th:text="'Código postal: ' + ${casa.codPostal}"></p>
+                <p class="card-text" th:text="'Tipo de vivienda: ' + ${casa.tipoVivienda}"></p>
+                <p class="card-text"
+                    th:text="'Disponible desde: ' + ${casa.fechaDesde} + ' hasta: ' + ${casa.fechaHasta}"></p>
+                <p class="card-text"
+                    th:text="'Estancia mínima: ' + ${casa.minDias} + ' días, estancia máxima: ' + ${casa.maxDias} + ' días.'">
+                </p>
+                <p class="card-text" th:text="'Precio por noche: $' + ${casa.precio}"></p>
+            </div>
+        </div>
+        <form class="formulario" th:action="@{/reserva/registro}" method="POST">
+            <h3 class="my-3 title"><i class="fa-solid fa-pen"></i> Crear Reserva</h3>
+            <input hidden th:value= "${session.usuariosession.id}" name="idCliente">
+            <input hidden th:value= "${idCasa}" name="idCasa">
+            <input hidden th:value= "${session.usuariosession.alias}" name="alias">
+            <div class="form-group mb-4">
+                <label for="huesped">Huesped:</label>
+                <input type="text" class="form-control" id="huesped" name="huesped" placeholder="Ingrese su nombre" th:value="${huesped}">
+            </div>
+            
+            <div class="form-group mb-4">
+                <label for="fechaDesde">Seleccionar desde:</label>
+                <input type="date" class="form-control" id="fechaDesde" name="fechaDesde"  th:value="${fechaDesde}">
+            </div>
+            <div class="form-group mb-4">
+                <label for="fechaHasta">Hasta:</label>
+                <input type="date" class="form-control" id="fechaHasta" name="fechaHasta"  th:value="${fechaHasta}">
+            </div>
+            <div class="form-group mb-4">
+                <label for="descripcion">Comentario:</label>
+                <br>
+                <textarea class="textarea" name="descripcion" id="descripcion" cols="30" rows="3" placeholder="Ingrese su comentario" maxlength="255"></textarea>
+                <!-- <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="Ingrese su comentario" th:value="${descripcion}"> -->
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-3 botones">Reservar</button>
+        </form>
+
+        <section class=" text-center container">
+            <div class="row mt-3">
+                <div class="divVolver">
+                    <a th:href="@{/casa/inicio}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
+                </div>
+            </div>
+        </section>
+    <!-- </div> -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

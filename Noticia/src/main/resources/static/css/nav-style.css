@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&family=Open+Sans:wght@400;600&family=Raleway:wght@400;600;700&display=swap');
+
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    color: white;
+    background: #eee;
+
+}
+
+.container-fluid {
+    width: 90%;
+}
+
+.container-fluid .navbar-brand img {
+    transition: all 0.3s;
+}
+
+.container-fluid .navbar-brand img:hover {
+    transform: scale(1.2);
+}
+
+.divVolver{
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+.botonVolver{
+    width: 70%;
+}
+
+.botones{
+    width: 100%;
+    box-shadow: 0px 2px 16px 4px rgba(0,0,0,0.36);
+    -webkit-box-shadow: 0px 2px 16px 4px rgba(0,0,0,0.36);
+    -moz-box-shadow: 0px 2px 16px 4px rgba(0,0,0,0.36);
+}
+
+.title-center{
+    text-align: center;
+}
+
+.text-overflow{
+    --font-size: 20px;
+    --line-height: 1.4;
+    --lines: 3;
+    display: block;
+    display: -webkit-box;
+    height: var(--font-size) * var(--line-height) * var(--lines);
+    font-size: var(--font-size);
+    line-height: var(--line-height);
+    -webkit-line-clamp: var(--lines);
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.contenedor-flexible{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.contenido{
+    width: 300px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.btn-gpt{
+    color: red;
+    background: none;
+    border: none;
+}
+.btn-gpt:hover{
+    text-decoration: underline;
+}
+
+.nav-center{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+.display-inline{
+    display: inline-block;
+}

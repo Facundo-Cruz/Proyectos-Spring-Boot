@@ -1,0 +1,40 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/}">
+            <img src="/img/Mountain.png" alt="" width="40px" height="auto">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav ms-auto">
+                <a th:if="${session.usuariosession != null}" class="nav-link" aria-current="page" th:href="@{/inicio/?page=0}">Inicio</a>
+                <a th:if="${session.usuariosession != null}" class="nav-link" th:href="@{/noticia/lista}" sec:authorize="hasRole('PERIODISTA')">Listar Noticias</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" sec:authorize="hasRole('ADMINISTRADOR')" th:if="${session.usuariosession != null}" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Listar
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" th:href="@{/noticia/lista}" >Noticias</a></li>
+                        <li ><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" th:href="@{/administrador/listar/usuarios}" >Usuarios</a></li>
+                        <li ><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" th:href="@{/administrador/listar/periodistas}" >Periodistas</a></li>
+                    </ul>
+                </li>
+                <a th:if="${session.usuariosession == null}" class="nav-link" th:href="@{/registrar}">Registrarse</a>
+                <a th:if="${session.usuariosession == null}" class="nav-link" th:href="@{/login}">Ingresar</a>
+                <li class="nav-item dropdown mx-5">
+                    <a sec:authorize="hasRole('ADMIN')" class="nav-link dropdown-toggle" th:if="${session.usuariosession != null}" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Perfil
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="/logout" >Cerrar Sesión</a></li>
+                    </ul>
+
+                </li>
+            </div>
+        </div>
+    </div>
+</nav>
